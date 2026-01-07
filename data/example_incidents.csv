@@ -1,0 +1,3 @@
+issue_key,summary,description,root_cause,resolution,preventive_action
+INC-1001,Login fails for subset of users,"Users in EU report 401 after deployment","Auth service misconfigured after config change; missing audience claim validation caused token rejection","Rollback config and redeploy; validated tokens in staging","Add config validation in CI and monitor 401 rates with alert"
+INC-1002,Queue processing delay,"Background jobs delayed up to 30min","Scaling policy not applied to worker group; CPU threshold too high and no backlog metric used","Adjusted autoscaling policy and deployed new worker group","Add backlog-based scaling and load test before releases"
