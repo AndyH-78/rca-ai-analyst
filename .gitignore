@@ -12,3 +12,6 @@ data/*.csv
 
 # Env
 .env
+
+# Batch outputs
+out/
