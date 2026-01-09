@@ -1,0 +1,82 @@
+▶️ Starten (Standard-Workflow)
+1️⃣ Terminal öffnen
+cd ~/Documents/GitHub/rca-ai-analyst
+2️⃣ Virtual Environment aktivieren
+source .venv/bin/activate
+Du erkennst es an:
+(.venv)
+3️⃣ Ollama starten (falls nicht automatisch läuft)
+ollama serve
+💡 In vielen Fällen läuft Ollama schon im Hintergrund → dann einfach ignorieren.
+Optional prüfen:
+ollama list
+4️⃣ Streamlit UI starten
+streamlit run app.py
+➡️ Browser öffnet sich automatisch
+➡️ Tool ist einsatzbereit
+Optional) MCP Server starten
+In einem zweiten Terminal-Fenster:
+cd ~/Documents/GitHub/rca-ai-analyst
+source .venv/bin/activate
+export RCA_CSV_PATH="./data/example_incidents.csv"
+python mcp_server.py
+⏹️ Stoppen (wichtig & einfach)
+Streamlit stoppen
+Im Terminal mit Streamlit:
+CTRL + C
+MCP Server stoppen
+Im MCP-Terminal:
+CTRL + C
+Virtual Env verlassen
+deactivate
+Fertig ✅
+🟡 Variante 2: Komfortabel mit Start-Script (sehr empfehlenswert)
+Wir bauen dir ein einziges Start-Skript.
+📄 start.sh
+cat > start.sh << 'EOF'
+#!/bin/bash
+cd "$(dirname "$0")"
+
+source .venv/bin/activate
+
+echo "Starting Streamlit UI..."
+streamlit run app.py
+EOF
+Ausführbar machen:
+chmod +x start.sh
+➡️ Starten ab jetzt mit:
+./start.sh
+Stoppen: CTRL + C
+📄 start_mcp.sh
+cat > start_mcp.sh << 'EOF'
+#!/bin/bash
+cd "$(dirname "$0")"
+
+export RCA_CSV_PATH="./data/example_incidents.csv"
+source .venv/bin/activate
+
+echo "Starting MCP Server..."
+python mcp_server.py
+EOF
+chmod +x start_mcp.sh
+🔵 Variante 3: „Daily Driver“ (Mac-freundlich)
+Alias anlegen (optional)
+nano ~/.zshrc
+Am Ende hinzufügen:
+alias rca-ui="cd ~/Documents/GitHub/rca-ai-analyst && ./start.sh"
+alias rca-mcp="cd ~/Documents/GitHub/rca-ai-analyst && ./start_mcp.sh"
+Dann:
+source ~/.zshrc
+➡️ Ab jetzt überall:
+rca-ui
+rca-mcp
+🧠 Wann läuft was?
+Komponente	Wann nötig
+Streamlit UI	Wenn du RCAs bewertest
+MCP Server	Wenn KI-Agenten / Tools zugreifen
+Ollama	Immer, wenn KI genutzt wird
+
+MCP-Testclient starten:
+cd ~/Documents/GitHub/rca-ai-analyst
+source .venv/bin/activate
+python mcp_test_client.py
