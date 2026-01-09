@@ -15,3 +15,6 @@ data/*.csv
 
 # Batch outputs
 out/
+
+# Batch outputs
+out/
